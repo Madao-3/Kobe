@@ -86,14 +86,14 @@
     }
     
     var userData = {
-      "solution"  : self.result[index]
+      "solution"  : window.result[index]
     }
 		var config = {
-			"iterations": 4000
-			, "size": 250
-			, "crossover": 0.3
-			, "mutation": 0.3
-			, "skip": 20
+			"iterations": 4000,
+      "size": 250,
+      "crossover": 0.3,
+      "mutation": 0.3,
+      "skip": 20
 		};
     
     genetic.evolve(config, userData);
