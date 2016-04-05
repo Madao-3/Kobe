@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Kobe by Madao-3</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Kobe by Madao-3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+</head>
 <body>
-
-<script>
+	<script src="./genetic-0.1.14.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
   window.current = 0
   function create_genetic(index){
     var genetic = Genetic.create();
@@ -24,10 +25,10 @@
       function randomRGBItem() {
         return Math.floor(Math.random()*RGB_CONSTANTS_NUMBER)
       }
-    	function randomRGBColor() {
-    		return [randomRGBItem(),randomRGBItem(),randomRGBItem()];
-    	}
-    	return randomRGBColor();
+      function randomRGBColor() {
+        return [randomRGBItem(),randomRGBItem(),randomRGBItem()];
+      }
+      return randomRGBColor();
     };
 
     // 变异，修改色值完成进化  
@@ -36,43 +37,43 @@
       var RGB_CONSTANTS_NUMBER = 256
       index = Math.floor(Math.random()*entity.length)
       entity[index] = Math.floor(entity[index] + RGB_CONSTANTS_NUMBER * Math.random())%RGB_CONSTANTS_NUMBER
-    	return entity
+      return entity
     };
     // 交叉 遗传算法的基因重组
     // 
     genetic.crossover = function(mother, father) {
-    	// two-point crossover
-    	var len = mother.length;
-    	var ca = Math.floor(Math.random()*len);
-    	var cb = Math.floor(Math.random()*len);		
-    	if (ca > cb) {
-    		var tmp = cb;
-    		cb = ca;
-    		ca = tmp;
-    	}
+      // two-point crossover
+      var len = mother.length;
+      var ca = Math.floor(Math.random()*len);
+      var cb = Math.floor(Math.random()*len);		
+      if (ca > cb) {
+        var tmp = cb;
+        cb = ca;
+        ca = tmp;
+      }
 		
-    	var son      = father.slice(0,ca).concat(mother.slice(ca, cb-ca).concat(father.slice(cb,len)))
-    	var daughter = mother.slice(0,ca).concat(father.slice(ca, cb-ca).concat(mother.slice(cb,len)))
+      var son      = father.slice(0,ca).concat(mother.slice(ca, cb-ca).concat(father.slice(cb,len)))
+      var daughter = mother.slice(0,ca).concat(father.slice(ca, cb-ca).concat(mother.slice(cb,len)))
 	
-    	return [son, daughter];
+      return [son, daughter];
     };
     genetic.fitness = function(entity) {
-    	var fitness = 0;
+      var fitness = 0;
 	
-    	var i;
-    	for (i=0;i<entity.length;++i) {
-    		// increase fitness for each character that matches
-    		if (entity[i] == this.userData["solution"][i])
-    			fitness += 1;
-    		// award fractions of a point as we get warmer
-    		fitness += (127-Math.abs(entity[i] - this.userData["solution"][i]))/50;
-    	}
+      var i;
+      for (i=0;i<entity.length;++i) {
+        // increase fitness for each character that matches
+        if (entity[i] == this.userData["solution"][i])
+          fitness += 1;
+        // award fractions of a point as we get warmer
+        fitness += (127-Math.abs(entity[i] - this.userData["solution"][i]))/50;
+      }
 
-    	return fitness;
+      return fitness;
     };
     genetic.generation = function(pop, generation, stats) {
-    	// stop running once we've reached the solution
-    	return pop[0].entity != this.userData["solution"];
+      // stop running once we've reached the solution
+      return pop[0].entity != this.userData["solution"];
     };
     genetic.notification = function(pop, generation, stats, isFinished) {
       console.log(pop,generation)
@@ -84,9 +85,9 @@
       }
     }
     
-		var userData = {
+    var userData = {
       "solution"  : self.result[index]
-		};
+    };
     genetic.evolve(config, userData);
   }
   
@@ -97,7 +98,7 @@
   }
   window.result = []
 
-$(document).ready(function () {
+  $(document).ready(function () {
 
     image = new Image()
     image.src = './kobe.jpg'
@@ -120,9 +121,9 @@ $(document).ready(function () {
     }
     
 
-});
+  });
 
-</script>
+  </script>
 	
 	
 </body>
