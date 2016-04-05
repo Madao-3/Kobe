@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>To Kobe</title>
+	<script src="./genetic-0.1.14.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<script>
+
+var genetic = Genetic.create();
+
+genetic.optimize = Genetic.Optimize.Maximize;
+genetic.select1 = Genetic.Select1.Tournament2;
+genetic.select2 = Genetic.Select2.Tournament2;
+
+
+
+// 种子RBG 色彩字符串
+genetic.seed = function() {
+  var RGB_CONSTANTS_NUMBER = 256
+  function randomRGBItem() {
+    return Math.floor(Math.random()*RGB_CONSTANTS_NUMBER)
+  }
+	function randomRGBColor() {
+		return [randomRGBItem(),randomRGBItem(),randomRGBItem()];
+	}
+	return randomRGBColor();
+};
+
+// 变异，修改色值完成进化  
+// 注：色值修改不涉及逗号的部分，只进行数字部分的修改
+genetic.mutate = function(entity) {
+  var RGB_CONSTANTS_NUMBER = 256
+  index = Math.floor(Math.random()*entity.length)
+  entity[index] = Math.floor(entity[index] + RGB_CONSTANTS_NUMBER * Math.random())%RGB_CONSTANTS_NUMBER
+	return entity
+};
+
+
+// 交叉 遗传算法的基因重组
+// 
+genetic.crossover = function(mother, father) {
+	// two-point crossover
+	var len = mother.length;
+	var ca = Math.floor(Math.random()*len);
+	var cb = Math.floor(Math.random()*len);		
+	if (ca > cb) {
+		var tmp = cb;
+		cb = ca;
+		ca = tmp;
+	}
+		
+	var son      = father.slice(0,ca).concat(mother.slice(ca, cb-ca).concat(father.slice(cb,len)))
+	var daughter = mother.slice(0,ca).concat(father.slice(ca, cb-ca).concat(mother.slice(cb,len)))
+	
+	return [son, daughter];
+};
+
+genetic.fitness = function(entity) {
+	var fitness = 0;
+	
+	var i;
+	for (i=0;i<entity.length;++i) {
+		// increase fitness for each character that matches
+		if (entity[i] == this.userData["solution"][i])
+			fitness += 1;
+		// award fractions of a point as we get warmer
+		fitness += (127-Math.abs(entity[i] - this.userData["solution"][i]))/50;
+	}
+
+	return fitness;
+};
+
+genetic.generation = function(pop, generation, stats) {
+	// stop running once we've reached the solution
+	return pop[0].entity != this.userData["solution"];
+};
+
+genetic.notification = function(pop, generation, stats, isFinished) {
+
+  function lerp(a, b, p) {
+    return a + (b-a)*p;
+  }
+
+  var value = pop[0].entity;
+  this.last = this.last||value;
+
+  if (pop != 0 && value == this.last)
+    return;
+
+
+  var solution = [];
+  var i;
+  for (i=0;i<value.length;++i) {
+    var diff = value.charCodeAt(i) - this.last.charCodeAt(i);
+    var style = "background: transparent;";
+    if (diff > 0) {
+      style = "background: rgb(0,200,50); color: #fff;";
+    } else if (diff < 0) {
+      style = "background: rgb(0,100,50); color: #fff;";
+    }
+
+    solution.push("<span style=\"" + style + "\">" + value[i] + "</span>");
+  }
+
+  var buf = "";
+  buf += "<tr>";
+  buf += "<td>" + generation + "</td>";
+  buf += "<td>" + pop[0].fitness.toPrecision(5) + "</td>";
+  buf += "<td>" + solution.join("") + "</td>";
+  buf += "</tr>";
+  $("#results tbody").prepend(buf);
+	
+	this.last = value;
+  
+  if (isFinished) {
+    // 执行下一组
+  }
+};
+
+
+$(document).ready(function () {
+		var config = {
+			iterations : 4000,
+      size       : 250,
+      crossover  : 0.3,
+      mutation   : 0.3,
+      skip       : 20
+		}
+
+    image = new Image()
+    image.src = 'http://ww1.sinaimg.cn/large/94053c2djw1f2lp9m3nkej20fa0a6jrq.jpg'
+    image.onload = function(){
+      var x  = y = 0,
+      width  = this.width,
+      height = this.height,
+      canvas = document.createElement('canvas'),
+      context = canvas.getContext('2d')
+      context.drawImage(this, y, x)
+      var imageData = context.getImageData(x, y, width, height);
+      var data = imageData.data;
+      console.log(window.data =data)
+      
+    }
+    
+
+    // 超大数组
+    // 应该分治，空间不足
+		var userData = {
+      // "solution"  : $("#quote").val()
+      
+		};
+    // genetic.evolve(config, userData);
+});
+
+</script>
+	
+	
+</body>
+</html>
