@@ -75,6 +75,7 @@
     
     genetic.generation = function(pop, generation, stats) {
       // stop running once we've reached the solution
+      console.log(this.userData["solution"])
       console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
       return pop[0].entity.join(',') != this.userData["solution"].join(',');
     }
