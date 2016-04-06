@@ -64,7 +64,7 @@
       var i;
       for (i=0;i<entity.length;++i) {
         // increase fitness for each character that matches
-        console.log(this.userData["solution"][i])
+        console.log(this.userData["solution"][i],'hahaha2')
         if (entity[i] == this.userData["solution"][i])
           fitness += 1;
         // award fractions of a point as we get warmer
@@ -76,7 +76,7 @@
     
     genetic.generation = function(pop, generation, stats) {
       // stop running once we've reached the solution
-      console.log(this.userData["solution"])
+      console.log(this.userData["solution"],'hehe1')
       // console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
       var value = []
       for (let v of this.userData["solution"]) {
