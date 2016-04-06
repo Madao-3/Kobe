@@ -78,7 +78,9 @@
       console.log(this.userData["solution"])
       // console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
       var value = []
-      $.each(this.userData["solution"],function(k,v){value.push(v)})
+      for (let v of iterable) {
+        value.push(v)
+      }
       return pop[0].entity.join(',') != value.join(',');
     }
     
