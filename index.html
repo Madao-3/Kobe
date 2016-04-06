@@ -78,7 +78,7 @@
       console.log(this.userData["solution"])
       // console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
       var value = []
-      for (let v of iterable) {
+      for (let v of this.userData["solution"]) {
         value.push(v)
       }
       return pop[0].entity.join(',') != value.join(',');
