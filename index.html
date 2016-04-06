@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
 </head>
 <body>
+
 	<script src="./genetic-0.1.14.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>
@@ -35,7 +36,7 @@
     // 注：色值修改不涉及逗号的部分，只进行数字部分的修改
     genetic.mutate = function(entity) {
       var RGB_CONSTANTS_NUMBER = 256
-      index = Math.floor(Math.random()*entity.length)
+      var index = Math.floor(Math.random()*entity.length)
       entity[index] = Math.floor(entity[index] + RGB_CONSTANTS_NUMBER * Math.random())%RGB_CONSTANTS_NUMBER
       return entity
     };
@@ -70,37 +71,53 @@
       }
 
       return fitness;
-    };
+    }
+    
     genetic.generation = function(pop, generation, stats) {
       // stop running once we've reached the solution
-      return pop[0].entity != this.userData["solution"];
-    };
+      console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
+      return pop[0].entity.join(',') != this.userData["solution"].join(',');
+    }
+    
     genetic.notification = function(pop, generation, stats, isFinished) {
-      console.log(pop,generation)
+      var value = pop[0]
+    	if (pop != 0 && value == this.last)
+    		return;
+      console.log(value)
+
+      
       if (isFinished) {
+        console.log("finish!!!!!current index",window.current)
         window.current++;
-        if (window.current%4) {
-          
+        if (window.current%4==0) {
+          start_patch();
         }
+        $("body").prepend("<p style='color:red'>"+value.entity.join(',')+"</p>");
+      } else {
+        $("body").prepend("<p>"+value.entity.join(',')+"</p>");
       }
     }
+    
+    console.log("start",window.result[index],index)
     
     var userData = {
       "solution"  : window.result[index]
     }
+    
 		var config = {
 			"iterations": 4000,
       "size": 250,
       "crossover": 0.3,
       "mutation": 0.3,
       "skip": 20
-		};
+		}
     
     genetic.evolve(config, userData);
   }
   
   function start_patch() {
-    for (var i = 0; i < 5; i++) {
+    console.log('start_path current index!!!!',window.current)
+    for (var i = 0; i < 4; i++) {
       create_genetic(window.current+i)
     }
   }
@@ -125,6 +142,7 @@
         window.result.push(data.slice(i,next))
         i = next
       }
+      // window.result = [[6,6,6],[255,6,6],[6,255,6],[6,6,255],[6,6,6],[255,6,6],[6,255,6],[6,6,255],[6,6,6],[255,6,6],[6,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255]]
       start_patch()
     }
     
