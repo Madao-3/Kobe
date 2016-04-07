@@ -8,13 +8,26 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
   <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  <style type="text/css" media="screen">
+/*  body{background:#000;};*/
+  canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  </style>
 </head>
 <body>
-
+  <canvas id="main_container"></canvas>
 	<script src="./genetic-0.1.14.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>
   window.current = 0
+  window.container_ctx = $('#main_container').get(0).getContext("2d")
+  window.item_size = 10
+  window.cols_count = 0
   function create_genetic(index){
     var genetic = Genetic.create();
     genetic.optimize = Genetic.Optimize.Maximize;
@@ -64,7 +77,7 @@
       var i;
       for (i=0;i<entity.length;++i) {
         // increase fitness for each character that matches
-        console.log(this.userData["solution"][i],'hahaha2')
+        // console.log(this.userData["solution"][i],'hahaha2')
         if (entity[i] == this.userData["solution"][i])
           fitness += 1;
         // award fractions of a point as we get warmer
@@ -76,7 +89,7 @@
     
     genetic.generation = function(pop, generation, stats) {
       // stop running once we've reached the solution
-      console.log(this.userData["solution"],'hehe1')
+      // console.log(this.userData["solution"],'hehe1')
       // console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
       var value = []
       for (let v of this.userData["solution"]) {
@@ -89,8 +102,9 @@
       var value = pop[0]
     	if (pop != 0 && value == this.last)
     		return;
-      console.log(value)
-
+      // console.log(value)
+      x = (window.current%cols_count)*window.item_size
+      y = parseInt(window.current/cols_count,10)*window.item_size
       
       if (isFinished) {
         console.log("finish!!!!!current index",window.current)
@@ -98,27 +112,32 @@
         if (window.current%4==0) {
           start_patch();
         }
-        $("body").prepend("<p style='color:red'>"+value.entity.join(',')+"</p>");
+        
+        window.container_ctx.fillStyle="rgb("+value.entity.join(',')+")";
+        console.log(x,y,window.item_size,window.item_size,window.container_ctx.fillStyle)
+        window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
+        
+        // $("body").prepend("<p style='color:red'>"+value.entity.join(',')+"|generation|"+generation+"</p>");
       } else {
-        $("body").prepend("<p>"+value.entity.join(',')+"</p>");
+        // $("body").prepend("<p>"+value.entity.join(',')+"</p>");
       }
     }
     
     console.log("start",window.result[index],index)
     
-    var userData = {
-      "solution"  : window.result[index]
+    if (window.result[index]) {
+      var userData = {
+        "solution"  : window.result[index]
+      }
+  		var config = {
+  			"iterations": 4000,
+        "size": 250,
+        "crossover": 0.3,
+        "mutation": 0.3,
+        "skip": 20
+  		}
+      genetic.evolve(config, userData);
     }
-    
-		var config = {
-			"iterations": 4000,
-      "size": 250,
-      "crossover": 0.3,
-      "mutation": 0.3,
-      "skip": 20
-		}
-    
-    genetic.evolve(config, userData);
   }
   
   function start_patch() {
@@ -137,18 +156,25 @@
       var x  = y = 0,
       width  = this.width,
       height = this.height,
+      window_width = $(window).width(),
       canvas = document.createElement('canvas'),
       context = canvas.getContext('2d')
       context.drawImage(this, y, x)
       var imageData = context.getImageData(x, y, width, height);
       var data = imageData.data;
+      // canvas_height = (height/width)*window_width
+
+      // $('#main_container').width(window_width).height(canvas_height).css('margin-top',-canvas_height/2)
+      
+      window.item_size  = window_width/width
+      window.cols_count = width
       i = 0
       while(i != data.length) {
         next = i + 3
         window.result.push(data.slice(i,next))
         i = next
       }
-      // window.result = [[6,6,6],[255,6,6],[6,255,6],[6,6,255],[6,6,6],[255,6,6],[6,255,6],[6,6,255],[6,6,6],[255,6,6],[6,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255]]
+      // window.result = [[6,6,6],[255,6,6],[6,255,6],[6,6,255],[6,6,6],[255,6,6],[6,255,6],[6,6,255],[6,6,6],[255,6,6],[6,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[4,4,4],[255,4,4],[4,255,4],[4,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255],[5,3,4],[255,5,3],[4,255,5],[3,4,255]]
       start_patch()
     }
     
