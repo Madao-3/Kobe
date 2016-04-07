@@ -49,9 +49,9 @@
     // 变异，修改色值完成进化  
     // 注：色值修改不涉及逗号的部分，只进行数字部分的修改
     genetic.mutate = function(entity) {
-      if (window.prev_result) {
-        entity = window.prev_result
-        window.prev_result = null
+      if (this.userData.prev_result) {
+        entity = this.userData.prev_result
+        this.userData.prev_result = null
       } else {
         var RGB_CONSTANTS_NUMBER = 256
         var index = Math.floor(Math.random()*entity.length)
@@ -132,6 +132,9 @@
     if (window.result[index]) {
       var userData = {
         "solution"  : window.result[index]
+      }
+      if (window.prev_result) {
+        userData.prev_result = window.prev_result
       }
   		var config = {
   			"iterations": 4000,
