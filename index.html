@@ -28,6 +28,7 @@
   window.container_ctx = $('#main_container').get(0).getContext("2d")
   window.item_size = 10
   window.cols_count = 0
+  window.prev_result = null
   function create_genetic(index){
     var genetic = Genetic.create();
     genetic.optimize = Genetic.Optimize.Maximize;
@@ -48,9 +49,14 @@
     // 变异，修改色值完成进化  
     // 注：色值修改不涉及逗号的部分，只进行数字部分的修改
     genetic.mutate = function(entity) {
-      var RGB_CONSTANTS_NUMBER = 256
-      var index = Math.floor(Math.random()*entity.length)
-      entity[index] = Math.floor(entity[index] + RGB_CONSTANTS_NUMBER * Math.random())%RGB_CONSTANTS_NUMBER
+      if (window.prev_result) {
+        entity = window.prev_result
+        window.prev_result = null
+      } else {
+        var RGB_CONSTANTS_NUMBER = 256
+        var index = Math.floor(Math.random()*entity.length)
+        entity[index] = Math.floor(entity[index] + RGB_CONSTANTS_NUMBER * Math.random())%RGB_CONSTANTS_NUMBER
+      }
       return entity
     };
     // 交叉 遗传算法的基因重组
@@ -110,6 +116,7 @@
       
       if (isFinished) {
         // console.log("finish!!!!!current index",window.current)
+        window.prev_result = value.entity
         window.current++;
         create_genetic(window.current)
         window.container_ctx.fillStyle="rgb("+value.entity.join(',')+")";
