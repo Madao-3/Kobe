@@ -95,7 +95,7 @@
       // console.log(this.userData,pop[0].entity)
       for (var i in this.userData["solution"]) {
         var v = this.userData["solution"][i]
-        // console.log("color",v)
+        gg.log("color",v)
         value.push(v)
       }
       return pop[0].entity.join(',') != value.join(',');
@@ -112,9 +112,7 @@
       if (isFinished) {
         console.log("finish!!!!!current index",window.current)
         window.current++;
-        if (window.current%4==0) {
-          start_patch();
-        }
+        create_genetic(window.current)
         
         window.container_ctx.fillStyle="rgb("+value.entity.join(',')+")";
         console.log(x,y,window.item_size,window.item_size,window.container_ctx.fillStyle)
@@ -145,9 +143,9 @@
   
   function start_patch() {
     console.log('start_path current index!!!!',window.current)
-    for (var i = 0; i < 4; i++) {
-      create_genetic(window.current+i)
-    }
+    // for (var i = 0; i < 4; i++) {
+      create_genetic(window.current)
+    // }
   }
   window.result = []
 
