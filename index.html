@@ -93,7 +93,9 @@
       // console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
       var value = []
       console.log(this.userData,pop[0].entity)
-      for (let v of this.userData["solution"]) {
+      for (i in this.userData["solution"]) {
+        v = this.userData["solution"][i]
+        console.log("color",v)
         value.push(v)
       }
       return pop[0].entity.join(',') != value.join(',');
