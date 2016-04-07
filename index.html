@@ -92,10 +92,10 @@
       // console.log(this.userData["solution"],'hehe1')
       // console.log(pop[0].entity.join(',') == this.userData["solution"].join(','),'test')
       var value = []
-      console.log(this.userData,pop[0].entity)
+      // console.log(this.userData,pop[0].entity)
       for (var i in this.userData["solution"]) {
         var v = this.userData["solution"][i]
-        console.log("color",v)
+        // console.log("color",v)
         value.push(v)
       }
       return pop[0].entity.join(',') != value.join(',');
@@ -106,8 +106,8 @@
     	if (pop != 0 && value == this.last)
     		return;
       // console.log(value)
-      x = (window.current%cols_count)*window.item_size
-      y = parseInt(window.current/cols_count,10)*window.item_size
+      x = (window.current%window.cols_count)*window.item_size
+      y = parseInt(window.current/window.cols_count,10)*window.item_size
       
       if (isFinished) {
         console.log("finish!!!!!current index",window.current)
