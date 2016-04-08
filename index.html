@@ -169,6 +169,7 @@
       context.drawImage(this, y, x)
       var imageData = context.getImageData(x, y, width, height);
       var data = imageData.data;
+      window.data = data
       rows = Math.floor(width / 2,10)
       cols = Math.floor(height / 2,10)
       canvas_height = (height/width)*window_width
@@ -192,7 +193,7 @@
           window.result.push(full_list[index])
         }
       }
-      start_patch()
+      // start_patch()
     }
   });
 
