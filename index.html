@@ -181,30 +181,36 @@
         height: cols*window.item_size
       })
       
+      // i = 0
+      // window.full_list = []
+      // while(i != data.length) {
+      //   next = i + 4
+      //   window.full_list.push(data.slice(i,next-1 ))
+      //   i = next
+      // }
+      //
+      // for (var i = 0; i < cols; i++) {
+      //   for (var j = 0; j < rows; j++) {
+      //     index = (rows*32)*i+j*16
+      //     data = full_list[index]
+      //     if (data) {
+      //       window.result.push(data)
+      //     }
+      //   }
+      // }
+      
       i = 0
       window.full_list = []
       while(i != data.length) {
         next = i + 4
-        window.full_list.push(data.slice(i,next-1 ))
-        i = next
-      }
-      
-      for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
-          index = (rows*32)*i+j*16
-          data = full_list[index]
-          if (data) {
-            window.result.push(data)
-          }
-        }
-      }
-      for (var i = 0; i < window.result.length; i++) {
-        value = window.result[i]
+        // window.full_list.push(data.slice(i,next-1 ))
         x = (i%window.rows_count)*window.item_size,
         y = parseInt(i/window.rows_count,10)*window.item_size
-        window.container_ctx.fillStyle="rgb("+value.join(',')+")";
+        window.container_ctx.fillStyle="rgb("+data.slice(i,next-1).join(',')+")";
         window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
+        i = next
       }
+
       // start_patch()
     });
   });
