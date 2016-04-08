@@ -198,7 +198,14 @@
           }
         }
       }
-      start_patch()
+      for (var i = 0; i < window.result.length; i++) {
+        value = window.result[i]
+        x = (i%window.rows_count)*window.item_size,
+        y = parseInt(i/window.rows_count,10)*window.item_size
+        window.container_ctx.fillStyle="rgb("+value.join(',')+")";
+        window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
+      }
+      // start_patch()
     });
   });
 
