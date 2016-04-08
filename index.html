@@ -179,10 +179,10 @@
       window.item_size  = window_width/rows
       window.cols_count = width
       i = 0
-      var full_list = []
+      window.full_list = []
       while(i != data.length) {
         next = i + 4
-        full_list.push(data.slice(i,next-1 ))
+        window.full_list.push(data.slice(i,next-1 ))
         i = next
       }
       
