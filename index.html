@@ -169,36 +169,24 @@
       context.drawImage(this, y, x)
       var imageData = context.getImageData(x, y, width, height);
       var data = imageData.data;
-    //   window.a = data
-    // }
-      
-    canvas_height = (height/width)*window_width
-
-    $('#main_container').attr({
-      width: window_width,
-      height: canvas_height
-    })
-    // .css('margin-top',-canvas_height/2)
-      
-    window.item_size  = window_width/width
-    window.cols_count = width
-      i = 0
-      while(i != data.length) {
-        next = i + 4
-        window.result.push(data.slice(i,next-1 ))
-        i = next
+      rows = Math.floor(width / 2,10)
+      cols = Math.floor(height / 2,10)
+      canvas_height = (height/width)*window_width
+      $('#main_container').attr({
+        width: window_width,
+        height: canvas_height
+      })
+      window.item_size  = window_width/rows
+      window.cols_count = width
+      for (var i = 0; i < cols; i++) {
+        for (var j = 0; j < rows; j++) {
+          index = (rows*4)*i+j*2
+          window.result.push(data[index])
+        }
       }
-      
       start_patch()
     }
-    
-
   });
-
-
-window.result = [[6,6,6],[6,6,6],[6,6,6],[6,6,6],[6,6,6],[6,6,6],[6,6,6],[6,6,6],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[4,4,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[6,4,5],[6,4,5],[6,4,5],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[5,3,4],[4,2,3],[4,2,3],[4,2,3]]
-
-
 
   </script>
 	
