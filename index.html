@@ -133,6 +133,7 @@
       var userData = {
         "solution"  : window.result[index]
       }
+      console.log(window.result[index])
       if (window.prev_result) {
         userData.prev_result = window.prev_result
       }
@@ -194,7 +195,7 @@
           window.result.push(full_list[index])
         }
       }
-      // start_patch()
+      start_patch()
     }
   });
 
