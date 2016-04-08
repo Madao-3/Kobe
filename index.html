@@ -171,8 +171,8 @@
       var imageData = context.getImageData(x, y, width, height);
       var data = imageData.data;
       window.data = data
-      rows = Math.floor(width / 2,10)
-      cols = Math.floor(height / 2,10)
+      rows = Math.floor(width / 4,10)
+      cols = Math.floor(height / 4,10)
       canvas_height = (height/width)*window_width
       $('#main_container').attr({
         width: window_width,
@@ -190,7 +190,7 @@
       
       for (var i = 0; i < cols; i++) {
         for (var j = 0; j < rows; j++) {
-          index = (rows*4)*i+j*2
+          index = (rows*8)*i+j*4
           window.result.push(full_list[index])
         }
       }
