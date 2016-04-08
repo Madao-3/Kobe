@@ -175,12 +175,15 @@
       rows = Math.floor(width / 16,10)
       cols = Math.floor(height / 16,10)
       canvas_height = (height/width)*window_width
-      $('#main_container').attr({
-        width: window_width,
-        height: canvas_height
-      })
-      window.item_size  = window_width/rows
+
+      window.item_size  = 20
       window.cols_count = width
+      
+      $('#main_container').attr({
+        width: window.item_size*rows,
+        height: cols*window.item_size
+      })
+      
       i = 0
       window.full_list = []
       while(i != data.length) {
