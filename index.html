@@ -158,15 +158,16 @@
   $(document).ready(function () {
 
     image = new Image()
-    image.src = './kobe.png'
+    image.src = './kobe.jpg'
     image.onload = function(){
-      var x  = y = 0,
-      width  = this.width,
-      height = this.height,
+      var image = this,
+      x  = y = 0,
+      width  = image.width,
+      height = image.height,
       window_width = $(window).width(),
       canvas = document.createElement('canvas'),
       context = canvas.getContext('2d')
-      context.drawImage(this, y, x)
+      context.drawImage(image, y, x)
       var imageData = context.getImageData(x, y, width, height);
       var data = imageData.data;
       window.data = data
