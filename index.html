@@ -27,7 +27,7 @@
   window.current = 0
   window.container_ctx = $('#main_container').get(0).getContext("2d")
   window.item_size = 10
-  window.cols_count = 0
+  window.rows_count = 0
   window.prev_result = null
   function create_genetic(index){
     var genetic = Genetic.create();
@@ -111,8 +111,8 @@
     	if (pop != 0 && value == this.last)
     		return;
       // console.log(value)
-      x = (window.current%window.cols_count)*window.item_size
-      y = parseInt(window.current/window.cols_count,10)*window.item_size
+      x = (window.current%window.rows_count)*window.item_size
+      y = parseInt(window.current/window.rows_count,10)*window.item_size
       
       if (isFinished) {
         // console.log("finish!!!!!current index",window.current)
@@ -177,7 +177,7 @@
       canvas_height = (height/width)*window_width
 
       window.item_size  = 20
-      window.cols_count = width
+      window.rows_count = rows
       
       $('#main_container').attr({
         width: window.item_size*rows,
