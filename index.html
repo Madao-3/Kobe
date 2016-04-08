@@ -157,7 +157,7 @@
 
     image = new Image()
     image.src = './kobe1.jpg'
-    image.onload = function(){
+    $(image).on('load', function() {
       var image = this,
       x  = y = 0,
       width  = image.width,
@@ -199,7 +199,7 @@
         }
       }
       start_patch()
-    }
+    });
   });
 
   </script>
