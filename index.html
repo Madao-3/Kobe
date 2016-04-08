@@ -204,8 +204,9 @@
       while(i != data.length) {
         next = i + 4
         // window.full_list.push(data.slice(i,next-1 ))
-        x = (i%window.rows_count)*window.item_size,
-        y = parseInt(i/window.rows_count,10)*window.item_size
+        index = next/4
+        x = (index%width)*window.item_size,
+        y = parseInt(index/width,10)*window.item_size
         window.container_ctx.fillStyle="rgb("+data.slice(i,next-1).join(',')+")";
         window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
         i = next
