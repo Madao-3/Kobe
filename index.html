@@ -28,6 +28,7 @@
   window.container_ctx = $('#main_container').get(0).getContext("2d")
   window.item_size = 10
   window.rows_count = 0
+  window.times  = 16
   // window.prev_result = null
   function create_genetic(index){
     var genetic = Genetic.create();
@@ -119,7 +120,7 @@
       
       if (isFinished) {
         window.current++;
-        if (window.current%8==0) {
+        if (window.current%window.times==0) {
             start_patch()
         }
       }
@@ -146,7 +147,7 @@
   }
   
   function start_patch() {
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < window.times; i++) {
       create_genetic(window.current+i)
     }
   }
@@ -155,7 +156,7 @@
   $(document).ready(function () {
 
     image = new Image()
-    image.src = './kobe1.jpg'
+    image.src = './kobe.jpg'
     image.onload = function(){
       var image = this,
       x  = y = 0,
