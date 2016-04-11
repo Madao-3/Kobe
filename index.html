@@ -166,13 +166,15 @@
       window.container_ctx.drawImage(image, y, x,width,height)
       var imageData = window.container_ctx.getImageData(0, 0, width, height);
       var data = imageData.data;
+      window.container_ctx.clearRect(0,0,10000,10000)
+      
       window.data = data
       ratio = 20
       rows = Math.floor(width / ratio,10)
       cols = Math.floor(height / ratio,10)
       canvas_height = (height/width)*window_width
 
-      window.item_size  = 2
+      window.item_size  = 10
       window.rows_count = rows
       
 
@@ -196,7 +198,6 @@
         }
       }
       
-      // window.container_ctx.clearRect(0,0,10000,10000)
       //
       // for (var i = 0; i < window.result.length; i++) {
       //   x = (i%rows)*window.item_size,
