@@ -12,7 +12,6 @@
 /*  body{background:#000;};*/
   canvas{
     position: relative;
-    margin: 100px auto;
   }
   </style>
 </head>
@@ -158,90 +157,64 @@
       var image = this,
       x  = y = 0,
       width  = image.width,
-      height = image.height,
-      window_width = $(window).width(),
-      canvas = document.createElement('canvas'),
-      context = canvas.getContext('2d')
-      context.drawImage(image, y, x,width,height)
-      var imageData = context.getImageData(x, y, width, height);
-      var data = imageData.data;
-      window.data = data
-      rows = Math.floor(width / 16,10)
-      cols = Math.floor(height / 16,10)
-      canvas_height = (height/width)*window_width
-
-      window.item_size  = 1
-      window.rows_count = rows
-      
+      height = image.height
       $('#main_container').attr({
         width: width,
         height: height
       })
+      window_width = $(window).width(),
+      window.container_ctx.drawImage(image, y, x,width,height)
+      var imageData = window.container_ctx.getImageData(0, 0, width, height);
+      var data = imageData.data;
+      window.data = data
+      ratio = 20
+      rows = Math.floor(width / ratio,10)
+      cols = Math.floor(height / ratio,10)
+      canvas_height = (height/width)*window_width
+
+      window.item_size  = 2
+      window.rows_count = rows
       
-      // i = 0
-      // window.full_list = []
-      // while(i != data.length) {
-      //   next = i + 4
-      //   window.full_list.push(data.slice(i,next-1 ))
-      //   i = next
-      // }
-      //
-      // for (var i = 0; i < cols; i++) {
-      //   for (var j = 0; j < rows; j++) {
-      //     index = (rows*32)*i+j*16
-      //     data = full_list[index]
-      //     if (data) {
-      //       window.result.push(data)
-      //     }
-      //   }
-      // }
+
       
-      window.container_ctx.clearRect(0,0,10000,10000)
       i = 0
       window.full_list = []
-      while(i < 502000) {
+      while(i != data.length) {
         next = i + 4
-        // window.full_list.push(data.slice(i,next-1 ))
-        index = next/4
-        x = (index%width)*window.item_size,
-        y = parseInt(index/width,10)*window.item_size
-        color = "rgba("+data.slice(i,next).join(',')+")";
-        console.log(color)
-        window.container_ctx.fillStyle=color;
-        window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
+        window.full_list.push(data.slice(i,next-1 ))
         i = next
       }
+      
+      window.result = []
+      for (var i = 0; i < cols; i++) {
+        for (var j = 0; j < rows; j++) {
+          index = (rows*Math.pow(ratio,2))*i+j*4
+          data = full_list[index]
+          if (data) {
+            window.result.push(data)
+          }
+        }
+      }
+      
+      // window.container_ctx.clearRect(0,0,10000,10000)
+      //
+      // for (var i = 0; i < window.result.length; i++) {
+      //   x = (i%rows)*window.item_size,
+      //   y = parseInt(i/rows,10)*window.item_size
+      //   console.log(x,y)
+      //   data = window.result[i]
+      //   color = "rgb("+data.join(',')+")";
+      //   window.container_ctx.fillStyle=color;
+      //   window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
+      // }
+      start_patch()      
+    }
     image.src = './kobe1.jpg'
 
-      // start_patch()
-    });
+
   });
 
-    window.container_ctx.clearRect(0,0,10000,10000)
 
-  window.i = 0
-  function fuck(count) {
-    ii = window.i % count
-    window.full_list = []
-    while(ii < count) {
-      next = ii + 4
-      // window.full_list.push(data.slice(i,next-1 ))
-      index = (next+window.i)/4
-      x = (index%width)*window.item_size,
-      y = parseInt(index/width,10)*window.item_size
-      color = "rgba("+data.slice(window.i + ii,window.i+next).join(',')+")";
-      console.log(color)
-      window.container_ctx.fillStyle=color;
-      window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
-      ii = next
-      window.i += 4
-    }
-    
-  }
-  
-  setInterval(function(){
-    fuck(1000)
-  },500)
 
   </script>
 	
