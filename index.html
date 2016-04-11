@@ -27,6 +27,7 @@
   window.number_table = []
   // window.prev_result = null
   function create_genetic(index){
+    console.log(index)
     var genetic = Genetic.create();
     genetic.optimize = Genetic.Optimize.Maximize;
     genetic.select1 = Genetic.Select1.Fittest;
