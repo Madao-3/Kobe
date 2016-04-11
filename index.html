@@ -23,11 +23,10 @@
   window.current = 0
   window.container_ctx = $('#main_container').get(0).getContext("2d")
   window.rows_count = 0
-  window.times  = 16
+  window.times  = 50
   window.number_table = []
   // window.prev_result = null
   function create_genetic(index){
-    console.log(index)
     var genetic = Genetic.create();
     genetic.optimize = Genetic.Optimize.Maximize;
     genetic.select1 = Genetic.Select1.Fittest;
