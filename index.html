@@ -127,9 +127,7 @@
         x : (index%window.rows_count)*window.item_size,
         y : parseInt(index/window.rows_count,10)*window.item_size
       }
-      // if (window.prev_result) {
-      //   userData.prev_result = window.prev_result
-      // }
+
   		var config = {
   			"iterations": 4000,
         "size": 250,
@@ -170,6 +168,7 @@
       window.data = data
       ratio = 20
       rows = Math.floor(width / ratio,10)
+      cols = Math.floor(height / ratio,10)
       canvas_height = (height/width)*window_width
 
       window.item_size  = 10
@@ -195,19 +194,8 @@
           }
         }
       }
-      
-      //
-      // for (var i = 0; i < window.result.length; i++) {
-        // x = (i%rows)*window.item_size,
-        // y = parseInt(i/rows,10)*window.item_size
-      //   console.log(x,y)
-      //   data = window.result[i]
-      //   color = "rgb("+data.join(',')+")";
-      //   window.container_ctx.fillStyle=color;
-      //   window.container_ctx.fillRect(x,y,window.item_size,window.item_size);
-      // }
-      window.container_ctx.clearRect(0,0,10000,10000)
 
+      window.container_ctx.clearRect(0,0,10000,10000)
       
       start_patch()      
     }
