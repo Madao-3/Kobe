@@ -24,6 +24,7 @@
   window.container_ctx = $('#main_container').get(0).getContext("2d")
   window.rows_count = 0
   window.times  = 16
+  window.number_table = []
   // window.prev_result = null
   function create_genetic(index){
     var genetic = Genetic.create();
@@ -141,7 +142,9 @@
   
   function start_patch() {
     for (var i = 0; i < window.times; i++) {
-      create_genetic(window.current+i)
+      if (window.number_table.length) {
+        create_genetic(window.number_table.pop)
+      }
     }
   }
   window.result = []
@@ -166,12 +169,12 @@
       window.container_ctx.clearRect(0,0,10000,10000)
       
       window.data = data
-      ratio = 20
+      ratio = 5
       rows = Math.floor(width / ratio,10)
       cols = Math.floor(height / ratio,10)
       canvas_height = (height/width)*window_width
 
-      window.item_size  = 10
+      window.item_size  = 4
       window.rows_count = rows
       
 
@@ -194,7 +197,11 @@
           }
         }
       }
-
+      
+      for (var i = 0; i < result.length; i++) {
+        window.number_table.push(i)
+      }
+      window.number_table = shuffle(window.number_table)
       window.container_ctx.clearRect(0,0,10000,10000)
       
       start_patch()      
@@ -204,7 +211,16 @@
 
   });
 
-
+  function shuffle(a) {
+      var j, x, i;
+      for (i = a.length; i; i -= 1) {
+          j = Math.floor(Math.random() * i);
+          x = a[i - 1];
+          a[i - 1] = a[j];
+          a[j] = x;
+      }
+      return a;
+  }
 
   </script>
 	
